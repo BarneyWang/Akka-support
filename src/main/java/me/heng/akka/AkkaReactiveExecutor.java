@@ -1,10 +1,9 @@
 package me.heng.akka;
 
 import akka.actor.*;
-import com.alibaba.ais.scrm.task.ReactiveExecutor;
-import com.alibaba.ais.scrm.task.akka.Event.FlowEvent;
-import com.alibaba.ais.scrm.util.Loggable;
 import com.typesafe.config.Config;
+import me.heng.util.Loggable;
+import me.heng.util.ReactiveExecutor;
 import org.slf4j.Logger;
 import scala.concurrent.duration.Duration;
 
@@ -15,11 +14,12 @@ import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 
 /**
- * Created by chuanbao on 5/8/2016 AD.
+ * Created by Di Wang on 5/8/2016 AD.
  *
  * akka 实现 ReactiveExecutor
  */
 public class AkkaReactiveExecutor implements ReactiveExecutor, Loggable<Logger> {
+
     protected Logger logger = getLogger();
 
     final ActorSystem actorSystem;
@@ -63,7 +63,7 @@ public class AkkaReactiveExecutor implements ReactiveExecutor, Loggable<Logger> 
 
     @Override
     public <R, I> Future<R> submit(I input) {
-        manager.tell(FlowEvent.start(creator, input), ActorRef.noSender());
+        manager.tell(Event.FlowEvent.start(creator, input), ActorRef.noSender());
         /**
          * TODO 实现future
          */

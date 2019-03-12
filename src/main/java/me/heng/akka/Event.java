@@ -5,13 +5,14 @@ import akka.japi.Creator;
 import java.io.Serializable;
 
 /**
- * Created by chuanbao on 5/8/2016 AD.
+ * Created by Di Wang on 5/8/2016 AD.
  */
 public interface Event {
 
     Object getData();
 
     class NodeEvent implements Event, Serializable {
+
         final Object data;
 
         NodeEvent(Object data) {
@@ -37,6 +38,7 @@ public interface Event {
     }
 
     class FlowEvent implements Event, Serializable {
+
         final Object data;
 
         FlowEvent(Object data) {

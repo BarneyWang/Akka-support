@@ -8,7 +8,9 @@ import akka.event.Logging;
 import akka.event.LoggingAdapter;
 
 /**
- * Created by chuanbao on 5/8/2016 AD.
+ * AUTHOR: Di.W
+ * DATE: 2019-03-12
+ * TIME: 11:05
  */
 public abstract class BaseActor extends UntypedActor {
 

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * note:   the class  that implements this IF will throw an Exception when be serialized
- * AUTHOR: wangdi
+ * AUTHOR: Di.W
  * DATE: 2019-03-12
  * TIME: 10:58
  */

@@ -1,12 +1,15 @@
 package me.heng.akka;
 
 import akka.actor.Props;
-import com.alibaba.ais.scrm.util.Exceptions;
+import me.heng.util.Exceptions;
+
 
 import java.util.function.Function;
 
 /**
- * Created by chuanbao on 5/8/2016 AD.
+ * AUTHOR: Di.W
+ * DATE: 2019-03-12
+ * TIME: 11:05
  */
 public class AkkaSupport {
 

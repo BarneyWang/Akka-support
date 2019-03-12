@@ -4,7 +4,7 @@ import akka.actor.ActorRef;
 import akka.actor.Cancellable;
 import akka.actor.ReceiveTimeout;
 import akka.util.Timeout;
-import com.alibaba.ais.scrm.task.akka.Event.NodeEvent;
+
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
@@ -15,12 +15,12 @@ import java.util.function.Function;
 
 import static akka.pattern.Patterns.ask;
 import static akka.pattern.Patterns.pipe;
-import static com.alibaba.ais.scrm.task.akka.Event.NodeEvent.error;
-import static com.alibaba.ais.scrm.task.akka.Event.NodeEvent.success;
-import static com.alibaba.ais.scrm.task.akka.FunctorError.*;
+
 
 /**
- * Created by chuanbao on 5/8/2016 AD.
+ * AUTHOR: Di.W
+ * DATE: 2019-03-12
+ * TIME: 11:05
  */
 class Node {
 
@@ -58,9 +58,9 @@ class Node {
             if (sender().equals(context().parent())) {
                 try {
                     Object result = functor().apply(message);
-                    report(NodeEvent.success(result));
+                    report(Event.NodeEvent.success(result));
                 } catch (Throwable t) {
-                    report(NodeEvent.error(t));
+                    report(Event.NodeEvent.error(t));
                 }
             } else
                 unhandled(message);
@@ -83,15 +83,15 @@ class Node {
             logger.debug("received:{}", message);
             if (message instanceof FunctorError) {
                 logger.warning("{} return error", sender());
-                if (message instanceof ReturnNull) {
+                if (message instanceof FunctorError.ReturnNull) {
                     logger.warning("{} return null", sender());
-                } else if (message instanceof RunError) {
-                    logger.warning("{} run error:{}", sender(), ((RunError) message).getMessage());
-                    report(NodeEvent.error( message));
-                } else if (message instanceof TypeError) {
+                } else if (message instanceof FunctorError.RunError) {
+                    logger.warning("{} run error:{}", sender(), ((FunctorError.RunError) message).getMessage());
+                    report(Event.NodeEvent.error(message));
+                } else if (message instanceof FunctorError.TypeError) {
                     logger.warning("{} parameter type mismatch:{}", sender(),
-                            ((RunError) message).getMessage());
-                    report(NodeEvent.error( message));
+                            ((FunctorError.RunError) message).getMessage());
+                    report(Event.NodeEvent.error( message));
                 }
             } else {
                 if (sender().equals(_target)) {
@@ -103,9 +103,9 @@ class Node {
 
         protected void doTargetMessage(Object message) {
             if (message instanceof Throwable) {
-                report(error(message));
+                report(Event.NodeEvent.error(message));
             } else
-                report(success(message));
+                report(Event.NodeEvent.success(message));
         }
 
         protected void doFlowMessage(Object message) {
@@ -151,7 +151,7 @@ class Node {
         @Override
         protected void doTargetMessage(Object message) {
             if (message instanceof TimeoutException) {
-                report(NodeEvent.error(message));
+                report(Event.NodeEvent.error(message));
                 /**
                  * TODO 超时处理
                  */
@@ -190,7 +190,7 @@ class Node {
                      */
                     logger.warning("retry {}/{} still failed, message:{}", times, duration,
                             message);
-                    report(error(message));
+                    report(Event.NodeEvent.error(message));
                 }
             } else {
                 super.doTargetMessage(message);

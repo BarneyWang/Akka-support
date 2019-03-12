@@ -7,7 +7,9 @@ import java.util.concurrent.Future;
 import java.util.function.Function;
 
 /**
- * Created by Di Wang on 5/25/2016 AD.
+ * AUTHOR: Di.W
+ * DATE: 2019-03-12
+ * TIME: 11:05
  */
 public class CompletableExecutor implements ReactiveExecutor, Loggable {
 

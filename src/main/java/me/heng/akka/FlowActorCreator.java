@@ -4,13 +4,15 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.actor.Scheduler;
 import akka.japi.Creator;
-import com.alibaba.ais.scrm.task.akka.Node.*;
+import me.heng.akka.Node.*;
 
 import java.util.LinkedList;
 import java.util.function.Function;
 
 /**
- * Created by chuanbao on 5/8/2016 AD.
+ * AUTHOR: Di.W
+ * DATE: 2019-03-12
+ * TIME: 11:05
  */
 public class FlowActorCreator implements Creator<FlowActor> {
 

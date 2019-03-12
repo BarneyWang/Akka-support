@@ -2,15 +2,12 @@ package me.heng.akka;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import com.alibaba.ais.scrm.task.akka.Event.FlowEvent;
-import com.alibaba.ais.scrm.task.akka.Event.NodeEnd;
-import com.alibaba.ais.scrm.task.akka.Event.NodeError;
-import com.alibaba.ais.scrm.task.akka.Event.NodeEvent;
-
 import java.util.List;
 
 /**
- * Created by chuanbao on 5/8/2016 AD.
+ * AUTHOR: Di.W
+ * DATE: 2019-03-12
+ * TIME: 11:05
  */
 public class FlowActor extends BaseActor {
 
@@ -35,17 +32,17 @@ public class FlowActor extends BaseActor {
             if (!startNextNode(data)) {
                 logger.error("no node found in this flow");
             }
-        } else if (message instanceof NodeEvent) {
-            if (message instanceof NodeError) {
+        } else if (message instanceof Event.NodeEvent) {
+            if (message instanceof Event.NodeError) {
                 /**
                  * TODO 错误控制
                  */
-                report(FlowEvent.error( data));
-            } else if (message instanceof NodeEnd) {
+                report(Event.FlowEvent.error( data));
+            } else if (message instanceof Event.NodeEnd) {
                 if (!startNextNode(data)) {
                     logger.info("no next node:{}", _cursor);
                     logger.info("flow end message:{}", data);
-                    report(FlowEvent.success(data));
+                    report(Event.FlowEvent.success(data));
                 }
             }
         } else {
